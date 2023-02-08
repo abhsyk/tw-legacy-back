@@ -1,13 +1,13 @@
 import mongoose from 'mongoose';
 import * as dotenv from 'dotenv';
 
-dotenv.config({ path: '../.env' });
+dotenv.config({ path: '.env' });
 
 import app from './app';
 
 // Database connection
 const DATABASE = process.env.DATABASE!.replace(
-  '<PASSWORD>',
+  '<password>',
   process.env.DATABASE_PASSWORD!
 );
 mongoose
