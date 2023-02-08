@@ -1,6 +1,7 @@
 import User from '../models/user';
 import AppError from '../utils/appError';
 import catchAsync from '../utils/catchAsync';
+import createSendToken from '../utils/createSendToken';
 
 export const register = catchAsync(async (req, res, next) => {
   // Check username and email if the user already exists
@@ -21,12 +22,6 @@ export const register = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
-  console.log(user);
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      user,
-    },
-  });
+  createSendToken(user, 201, res);
 });

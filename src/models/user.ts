@@ -1,18 +1,7 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
-
-interface IUser extends Document {
-  username: string;
-  displayName: string;
-  email: string;
-  password: string | undefined;
-  passwordConfirm: string | undefined;
-  bio: string;
-  website: string;
-  location: string;
-  profileIcon: string;
-}
+import { IUser } from '../utils/types';
 
 const userSchema = new mongoose.Schema<IUser>({
   username: {
