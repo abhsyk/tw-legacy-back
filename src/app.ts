@@ -1,5 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
+import userRoutes from './routes/user';
 
 const app = express();
 
@@ -8,7 +10,13 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+// Cors
+app.use(cors());
+
 // Body parser
 app.use(express.json());
+
+// Routes
+app.use('/api/v1/users', userRoutes);
 
 export default app;
