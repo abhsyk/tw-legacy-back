@@ -29,3 +29,5 @@ export const createPost = catchAsync(
     });
   }
 );
+
+export const getAllPosts = catchAsync(async (req, res, next) => {});
