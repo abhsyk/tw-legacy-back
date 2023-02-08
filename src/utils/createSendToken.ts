@@ -3,14 +3,15 @@ import jwt from 'jsonwebtoken';
 import { IUser } from './types';
 
 // Create token
-const signToken = (id: IUser['_id']) => {
-  jwt.sign({ id }, process.env.JWT_SECRET!, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+const signToken = (id: string) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET!, {
+    expiresIn: process.env.JWT_EXPIRES_IN!,
   });
 };
 
 const createSendToken = (user: IUser, statusCode: number, res: Response) => {
   const token = signToken(user._id);
+
   const cookieOption: CookieOptions = {
     expires: new Date(
       Date.now() + +process.env.JWT_COOKIE_EXPIRES_IN! * 24 * 60 * 60 * 1000
