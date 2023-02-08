@@ -10,4 +10,5 @@ export interface IUser extends Document {
   website: string;
   location: string;
   profileIcon: string;
+  correctPassword: (candidatePassword: string, userPassword: string) => boolean;
 }
