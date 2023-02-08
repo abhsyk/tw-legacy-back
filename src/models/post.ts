@@ -10,7 +10,7 @@ const postSchema = new mongoose.Schema<IPost>(
       required: [true, 'Content must belong to a user.'],
     },
   },
-  { timestamps: true }
+  { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 );
 
 const Post = mongoose.model('Post', postSchema);
