@@ -1,7 +1,62 @@
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import User from '../models/user';
 import AppError from '../utils/appError';
 import catchAsync from '../utils/catchAsync';
 import createSendToken from '../utils/createSendToken';
+
+export const currentUser = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user?._id);
+
+  if (!user) {
+    return next(
+      new AppError('You are not logged in! Please log in to get access.', 401)
+    );
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: { user },
+  });
+});
+
+// Protect
+export const protect = catchAsync(async (req, res, next) => {
+  let token: string | undefined;
+  if (req.cookies.token) {
+    token = req.cookies.token;
+  }
+
+  if (!token) {
+    return next(
+      new AppError('You are not logged in! Please log in to get access.', 401)
+    );
+  }
+
+  const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+  const currentUser = await User.findById(decoded.id);
+
+  // If the user deleted their account after logging in
+  if (!currentUser) {
+    return next(
+      new AppError(
+        'The user belonging to this token does no longer exist.',
+        401
+      )
+    );
+  }
+
+  // if (currentUser.changedPasswordAfter(decoded.iat!)) {
+  //   return next(
+  //     new AppError(
+  //       'User recently changed password! Please log in again.',
+  //       401
+  //     )
+  //   );
+  // }
+
+  req.user = currentUser;
+  next();
+});
 
 // Register
 export const register = catchAsync(async (req, res, next) => {
