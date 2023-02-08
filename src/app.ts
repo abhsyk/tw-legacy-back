@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import userRoutes from './routes/user';
 
 const app = express();
@@ -15,6 +16,8 @@ app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
 
 // Body parser
 app.use(express.json());
+// Cookie parser
+app.use(cookieParser());
 
 // Routes
 app.use('/api/v1/users', userRoutes);

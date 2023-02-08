@@ -1,3 +1,4 @@
+import { Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import User from '../models/user';
 import AppError from '../utils/appError';
@@ -103,3 +104,16 @@ export const login = catchAsync(async (req, res, next) => {
 
   createSendToken(user, 200, res);
 });
+
+// Logout
+export const logout = (req: Request, res: Response) => {
+  res.cookie('token', 'loggedout', {
+    expires: new Date(Date.now() + 10000),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    status: 'success',
+    message: 'Logged out',
+  });
+};
