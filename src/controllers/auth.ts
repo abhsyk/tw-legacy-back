@@ -4,9 +4,10 @@ import User from '../models/user';
 import AppError from '../utils/appError';
 import catchAsync from '../utils/catchAsync';
 import createSendToken from '../utils/createSendToken';
+import { UserRequest } from '../utils/types';
 
 // Protect
-export const protect = catchAsync(async (req, res, next) => {
+export const protect = catchAsync(async (req: UserRequest, res, next) => {
   let token: string | undefined;
   if (req.cookies.token) {
     token = req.cookies.token;

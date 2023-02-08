@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { Document, Schema } from 'mongoose';
 
 export interface IUser extends Document {
@@ -16,4 +17,8 @@ export interface IUser extends Document {
 export interface IPost extends Document {
   content: string;
   postedBy: Schema.Types.ObjectId;
+}
+
+export interface UserRequest extends Request {
+  user?: IUser;
 }

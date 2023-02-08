@@ -4,6 +4,7 @@ import User from '../models/user';
 import AppError from '../utils/appError';
 import catchAsync from '../utils/catchAsync';
 import createSendToken from '../utils/createSendToken';
+import { UserRequest } from '../utils/types';
 
 export const getUser = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ username: req.params.username });
@@ -20,7 +21,7 @@ export const getUser = catchAsync(async (req, res, next) => {
   });
 });
 
-export const currentUser = catchAsync(async (req, res, next) => {
+export const currentUser = catchAsync(async (req: UserRequest, res, next) => {
   const user = await User.findById(req.user?._id);
 
   if (!user) {
