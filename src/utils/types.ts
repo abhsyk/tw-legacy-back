@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Schema } from 'mongoose';
 
 export interface IUser extends Document {
   username: string;
@@ -11,4 +11,9 @@ export interface IUser extends Document {
   location: string;
   profileIcon: string;
   correctPassword: (candidatePassword: string, userPassword: string) => boolean;
+}
+
+export interface IPost extends Document {
+  content: string;
+  postedBy: Schema.Types.ObjectId;
 }

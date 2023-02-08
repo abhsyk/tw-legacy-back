@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import userRoutes from './routes/user';
+import postRoutes from './routes/post';
 
 const app = express();
 
@@ -21,5 +22,6 @@ app.use(cookieParser());
 
 // Routes
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/posts', postRoutes);
 
 export default app;
