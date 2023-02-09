@@ -33,6 +33,10 @@ export const createPost = catchAsync(
 
 export const getAllPosts = catchAsync(async (req, res, next) => {
   let filter = {};
+  if (req.params?.userId) {
+    /* Loading specific user's posts */
+    filter = { postedBy: req.params?.userId };
+  }
 
   const features = new APIFeatures(
     Post.find(filter).populate({ path: 'postedBy' }),

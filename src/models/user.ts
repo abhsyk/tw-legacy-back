@@ -10,7 +10,8 @@ const userSchema = new mongoose.Schema<IUser>(
       required: [true, 'Username is required.'],
       unique: true,
       trim: true,
-      minLength: 3,
+      minlength: 3,
+      maxlength: 14,
     },
     displayName: {
       type: String,
@@ -44,7 +45,7 @@ const userSchema = new mongoose.Schema<IUser>(
     profileIcon: {
       type: String,
       default: (): string => {
-        const colors = ['red', 'gray', 'blue'];
+        const colors = ['red', 'gray', 'blue', 'green'];
         const color = colors[Math.floor(Math.random() * colors.length)];
         return `/images/default-icon-${color}.png`;
       },
@@ -53,7 +54,7 @@ const userSchema = new mongoose.Schema<IUser>(
     website: String,
     location: String,
   },
-  { timestamps: true }
+  { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 );
 
 // Hash the password before saving

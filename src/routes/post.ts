@@ -7,6 +7,7 @@ const router = express.Router();
 router.use(protect);
 
 router.get('/', getAllPosts);
+router.get('/:userId/posts', getAllPosts);
 
 router.post('/', setUserId, createPost);
 
