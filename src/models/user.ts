@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import { IUser } from '../utils/types';
@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema<IUser>(
         return `/images/default-icon-${color}.png`;
       },
     },
+    reposts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     bio: String,
     website: String,
     location: String,

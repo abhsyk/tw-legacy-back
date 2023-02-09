@@ -11,12 +11,15 @@ export interface IUser extends Document {
   website: string;
   location: string;
   profileIcon: string;
+  reposts: Schema.Types.ObjectId[];
   correctPassword: (candidatePassword: string, userPassword: string) => boolean;
 }
 
 export interface IPost extends Document {
   content: string;
   postedBy: Schema.Types.ObjectId;
+  repostUsers: Schema.Types.ObjectId[];
+  repostData: Schema.Types.ObjectId;
 }
 
 export interface UserRequest extends Request {

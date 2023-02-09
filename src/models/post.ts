@@ -9,6 +9,8 @@ const postSchema = new mongoose.Schema<IPost>(
       ref: 'User',
       required: [true, 'Content must belong to a user.'],
     },
+    repostUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    repostData: { type: Schema.Types.ObjectId, ref: 'Post' },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true }, timestamps: true }
 );
