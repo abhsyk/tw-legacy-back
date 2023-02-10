@@ -119,3 +119,16 @@ export const repost = catchAsync(async (req: UserRequest, res, next) => {
     },
   });
 });
+
+export const deletePost = catchAsync(async (req, res, next) => {
+  const post = await Post.findByIdAndDelete(req.params.postId);
+
+  if (!post) {
+    return next(new AppError('No post find with that ID.', 404));
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});

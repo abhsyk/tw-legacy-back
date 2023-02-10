@@ -2,6 +2,7 @@ import express from 'express';
 import { protect } from '../controllers/auth';
 import {
   createPost,
+  deletePost,
   getAllPosts,
   getPost,
   repost,
@@ -18,5 +19,6 @@ router.get('/:userId/posts', getAllPosts);
 
 router.post('/repost', repost);
 router.post('/', setUserId, createPost);
+router.delete('/:postId', deletePost);
 
 export default router;
