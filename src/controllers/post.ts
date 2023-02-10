@@ -79,6 +79,33 @@ export const getAllPosts = catchAsync(async (req, res, next) => {
   });
 });
 
+export const toggleLike = catchAsync(async (req: UserRequest, res, next) => {
+  const { postId } = req.body;
+  const userId = req.user?.id;
+
+  const isLiked = req.user?.likes && req.user.likes.includes(postId);
+
+  const option = isLiked ? '$pull' : '$addToSet';
+
+  await User.findByIdAndUpdate(
+    userId,
+    { [option]: { likes: postId } },
+    { new: true }
+  );
+
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    { [option]: { likes: userId } },
+    { new: true }
+  ).populate([{ path: 'postedBy' }]);
+  // await post?.populate('postedBy');
+
+  res.status(200).json({
+    status: 'success',
+    data: { post },
+  });
+});
+
 export const repost = catchAsync(async (req: UserRequest, res, next) => {
   const postId = req.body.postId;
   const userId = req.user?.id;

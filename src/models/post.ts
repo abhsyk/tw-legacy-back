@@ -9,6 +9,7 @@ const postSchema = new mongoose.Schema<IPost>(
       ref: 'User',
       required: [true, 'Content must belong to a user.'],
     },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     repostUsers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     repostData: { type: Schema.Types.ObjectId, ref: 'Post' },
   },

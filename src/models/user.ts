@@ -50,6 +50,7 @@ const userSchema = new mongoose.Schema<IUser>(
         return `/images/default-icon-${color}.png`;
       },
     },
+    likes: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     reposts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
     bio: String,
     website: String,

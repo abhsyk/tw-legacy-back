@@ -11,6 +11,7 @@ export interface IUser extends Document {
   website: string;
   location: string;
   profileIcon: string;
+  likes: Schema.Types.ObjectId[];
   reposts: Schema.Types.ObjectId[];
   correctPassword: (candidatePassword: string, userPassword: string) => boolean;
 }
@@ -18,6 +19,7 @@ export interface IUser extends Document {
 export interface IPost extends Document {
   content: string;
   postedBy: Schema.Types.ObjectId;
+  likes: Schema.Types.ObjectId[];
   repostUsers: Schema.Types.ObjectId[];
   repostData: Schema.Types.ObjectId;
 }
