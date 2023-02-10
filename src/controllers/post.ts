@@ -36,6 +36,7 @@ export const createPost = catchAsync(
 export const getPost = catchAsync(async (req, res, next) => {
   const post = await Post.findById(req.params.postId).populate([
     { path: 'postedBy' },
+    { path: 'repostUsers' },
   ]);
 
   if (!post) {

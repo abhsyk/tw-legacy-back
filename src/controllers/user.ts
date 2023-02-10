@@ -1,13 +1,12 @@
-import { Request, Response } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
 import User from '../models/user';
 import AppError from '../utils/appError';
 import catchAsync from '../utils/catchAsync';
-import createSendToken from '../utils/createSendToken';
 import { UserRequest } from '../utils/types';
 
 export const getUser = catchAsync(async (req, res, next) => {
-  const user = await User.findOne({ username: req.params.username });
+  const user = await User.findOne({ username: req.params.username }).populate([
+    { path: 'likes', populate: 'postedBy' },
+  ]);
 
   if (!user) {
     return next(new AppError('No user find with that id.', 404));
