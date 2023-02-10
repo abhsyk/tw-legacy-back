@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import Post from '../models/post';
 import User from '../models/user';
 import APIFeatures from '../utils/apiFeatures';
+import AppError from '../utils/appError';
 import catchAsync from '../utils/catchAsync';
 import { UserRequest } from '../utils/types';
 
@@ -31,6 +32,22 @@ export const createPost = catchAsync(
     });
   }
 );
+
+export const getPost = catchAsync(async (req, res, next) => {
+  const post = await Post.findById(req.params.postId).populate([
+    { path: 'postedBy' },
+  ]);
+
+  if (!post) {
+    return next(new AppError('No post find with that id.', 404));
+  }
+  res.status(201).json({
+    status: 'success',
+    data: {
+      post,
+    },
+  });
+});
 
 export const getAllPosts = catchAsync(async (req, res, next) => {
   let filter = {};
